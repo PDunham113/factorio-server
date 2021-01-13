@@ -24,7 +24,7 @@ main () {
     local -r FACTORIO_PKG='/tmp/factorio.tar.cmp'
     # Download archive to /tmp
     echo "Downloading ${FACTORIO_VERSION} from ${FACTORIO_LINK}"
-    wget -q "${FACTORIO_LINK}" -O "${FACTORIO_PKG}"
+    curl -L# "${FACTORIO_LINK}" -o "${FACTORIO_PKG}"
 
     # Move existing factorio archive
     if [[ -d "${FACTORIO_INSTALL_LOC}/factorio" ]]; then
