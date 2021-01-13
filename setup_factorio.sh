@@ -21,7 +21,7 @@ readonly FACTORIO_USER="${FACTORIO_USER:-factorio}"
 
 main () {
     local -r FACTORIO_LINK=$(echo "${FACTORIO_LINK_TEMPLATE}" | sed "s/{}/${FACTORIO_VERSION}/")
-    local -r FACTORIO_PKG='factorio.tar.cmp'
+    local -r FACTORIO_PKG='/tmp/factorio.tar.cmp'
     # Download archive to /tmp
     echo "Downloading ${FACTORIO_VERSION} from ${FACTORIO_LINK}"
     wget -q "${FACTORIO_LINK}" -O "${FACTORIO_PKG}"
@@ -29,7 +29,7 @@ main () {
     # Move existing factorio archive
     if [[ -d "${FACTORIO_INSTALL_LOC}/factorio" ]]; then
         echo "Moving existing install to ${FACTORIO_INSTALL_LOC}/factorio.old"
-        mv "${FACTORIO_INSTALL_LOC}" "${FACTORIO_INSTALL_LOC}/factorio.old"
+        mv "${FACTORIO_INSTALL_LOC}/factorio" "${FACTORIO_INSTALL_LOC}/factorio.old"
     fi
 
     # Extract to final location
@@ -40,7 +40,7 @@ main () {
         echo "Unzipping using gzip"
         tar -xJf "${FACTORIO_PKG}" -C "${FACTORIO_INSTALL_LOC}"
     fi
-    rm "/tmp/${FACTORIO_PKG}"
+    rm "${FACTORIO_PKG}"
 
     # Create system user
     if id "${FACTORIO_USER}"; then
