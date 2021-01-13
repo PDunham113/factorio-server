@@ -10,6 +10,7 @@ set -e
 #
 # Requires:
 # - curl
+# - pv
 # - tar (and either gzip or xz, depending on version)
 readonly SCRIPT_DIR=$(cd $(dirname $0) && pwd)
 
