@@ -33,11 +33,11 @@ main () {
     if [[ -d "${FACTORIO_INSTALL_LOC}/factorio" ]]; then
         # Only keep previous save - we don't need it if the past upgrade worked
         if [[ -d "${FACTORIO_INSTALL_LOC}/factorio.old" ]]; then
-            echo "Existing backup. Delete? (y/n):"
-            select "${to_delete}" in 'y' 'n'; do
+            echo "Existing backup. Delete?:"
+            select to_delete in 'Yes' 'No'; do
                 case "${to_delete}" in
-                    'y' ) echo 'Deleting..'; rm -r "${FACTORIO_INSTALL_LOC}/factorio.old";;
-                    'n' ) echo 'Exiting..'; exit;;
+                    'Yes' ) echo 'Deleting..'; rm -r "${FACTORIO_INSTALL_LOC}/factorio.old";break;;
+                    'No' ) echo 'Exiting..'; exit;;
                 esac
             done
         fi
