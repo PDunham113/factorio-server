@@ -60,6 +60,7 @@ main () {
     if [[ "${is_upgrade}" = 'true' ]]; then
         echo 'Copying server metadata'
         local -r PERSISTENT_FILES=(\
+            'config' \
             'mods' \
             'player-data.json' \
             'saves' \
@@ -67,7 +68,10 @@ main () {
             'server-id.json' \
         )
         for file in "${PERSISTENT_FILES[@]}"; do
-            mv "${FACTORIO_INSTALL_LOC}/factorio.old/${file}" "${FACTORIO_INSTALL_LOC}/factorio/${file}"
+            if [[ -a "${FACTORIO_INSTALL_LOC}/factorio.old/${file}" ]]; then
+                mv "${FACTORIO_INSTALL_LOC}/factorio.old/${file}" \
+                   "${FACTORIO_INSTALL_LOC}/factorio/${file}"
+            fi
         done
     fi
 
