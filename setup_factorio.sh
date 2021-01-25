@@ -48,10 +48,10 @@ main () {
 
     # Extract to final location
     if file -b "${FACTORIO_PKG}" | grep -q 'XZ'; then
-        echo "Unzipping using xz"
+        echo 'Unzipping using xz'
         pv "${FACTORIO_PKG}" | tar -xJ -C "${FACTORIO_INSTALL_LOC}"
     elif file -b "${FACTORIO_PKG}" | grep -q 'gzip'; then
-        echo "Unzipping using gzip"
+        echo 'Unzipping using gzip'
         pv "${FACTORIO_PKG}" | tar -xz -C "${FACTORIO_INSTALL_LOC}"
     fi
     rm "${FACTORIO_PKG}"
