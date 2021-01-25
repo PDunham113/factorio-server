@@ -36,7 +36,7 @@ main () {
             echo "Existing backup. Delete? (y/n):"
             select "${to_delete}" in 'y' 'n'; do
                 case "${to_delete}" in
-                    'y' ) echo 'Deleting..'; rm -r "${FACTORIO_INSTALL_LOC}/factorio.old"
+                    'y' ) echo 'Deleting..'; rm -r "${FACTORIO_INSTALL_LOC}/factorio.old";;
                     'n' ) echo 'Exiting..'; exit;;
                 esac
             done
