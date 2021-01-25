@@ -29,6 +29,16 @@ main () {
 
     # Move existing factorio archive
     if [[ -d "${FACTORIO_INSTALL_LOC}/factorio" ]]; then
+        # Only keep previous save - we don't need it if the past upgrade worked
+        if [[ -d "${FACTORIO_INSTALL_LOC}/factorio.old" ]]; then
+            echo "Existing backup. Delete? (y/n):"
+            select "${to_delete}" in 'y' 'n'; do
+                case "${to_delete}" in
+                    'y' ) echo 'Deleting..'; rm -r "${FACTORIO_INSTALL_LOC}/factorio.old"
+                    'n' ) echo 'Exiting..'; exit;;
+                esac
+            done
+        fi
         echo "Moving existing install to ${FACTORIO_INSTALL_LOC}/factorio.old"
         mv "${FACTORIO_INSTALL_LOC}/factorio" "${FACTORIO_INSTALL_LOC}/factorio.old"
     fi
