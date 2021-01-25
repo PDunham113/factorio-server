@@ -23,6 +23,8 @@ readonly FACTORIO_USER="${FACTORIO_USER:-factorio}"
 main () {
     local -r FACTORIO_LINK=$(echo "${FACTORIO_LINK_TEMPLATE}" | sed "s/{}/${FACTORIO_VERSION}/")
     local -r FACTORIO_PKG='/tmp/factorio.tar.cmp'
+
+    local is_upgrade='false'
     # Download archive to /tmp
     echo "Downloading ${FACTORIO_VERSION} from ${FACTORIO_LINK}"
     curl -L# "${FACTORIO_LINK}" -o "${FACTORIO_PKG}"
@@ -41,6 +43,7 @@ main () {
         fi
         echo "Moving existing install to ${FACTORIO_INSTALL_LOC}/factorio.old"
         mv "${FACTORIO_INSTALL_LOC}/factorio" "${FACTORIO_INSTALL_LOC}/factorio.old"
+        is_upgrade='true'
     fi
 
     # Extract to final location
@@ -52,6 +55,21 @@ main () {
         pv "${FACTORIO_PKG}" | tar -xz -C "${FACTORIO_INSTALL_LOC}"
     fi
     rm "${FACTORIO_PKG}"
+
+    # If upgrade, carry continuity of installation
+    if [[ "${is_upgrade}" = 'true' ]]; then
+        echo 'Copying server metadata'
+        local -r PERSISTENT_FILES=(\
+            'mods' \
+            'player-data.json' \
+            'saves' \
+            'server-adminlist.json' \
+            'server-id.json' \
+        )
+        for "${file}" in "${PERSISTENT_FILES[@]}"; do
+            mv "${FACTORIO_INSTALL_LOC}/factorio.old/${file}" "${FACTORIO_INSTALL_LOC}/factorio/${file}"
+        done
+    fi
 
     # Create system user
     if id "${FACTORIO_USER}"; then
