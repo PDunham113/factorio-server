@@ -66,7 +66,7 @@ main () {
             'server-adminlist.json' \
             'server-id.json' \
         )
-        for "${file}" in "${PERSISTENT_FILES[@]}"; do
+        for file in "${PERSISTENT_FILES[@]}"; do
             mv "${FACTORIO_INSTALL_LOC}/factorio.old/${file}" "${FACTORIO_INSTALL_LOC}/factorio/${file}"
         done
     fi
